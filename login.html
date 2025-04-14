@@ -3,6 +3,17 @@
 <head>
     <title>AI SMART NOTES - LOGIN</title>
     <link rel="stylesheet" href="styles.css">
+	<script>
+      function validateLogin(){
+          let email=document.getElementById("email").value;
+          let password=document.getElementById("password").value;
+      
+          if(email==="" || password===""){
+              alert("Please fill all fields");
+              return false;
+          }
+      }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -10,8 +21,7 @@
 
     <input type="email" id="email" placeholder="Email"><br/><br/>
     <input type="password" id="password" placeholder="Password"><br/><br/>
-    <button>Login</button>
-
+    <button onclick="validateLogin()">Login</button>
     <p>
         Don't have an account?
         <a href="signup.html">Sign Up</a>
