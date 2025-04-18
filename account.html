@@ -1,36 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Account</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Account — AI Smart Notes</title>
+  <link rel="icon" href="images/notes.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<div class="account-page">
+  <div class="account-card">
 
-<div class="container">
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem;">
+      <div class="avatar" id="avatar-big" style="width:52px;height:52px;font-size:1.3rem;border-radius:50%;flex-shrink:0;"></div>
+      <div>
+        <h2 style="margin-bottom:0.15rem;">My Account</h2>
+        <p class="subtitle" style="margin-bottom:0;">Manage your profile details</p>
+      </div>
+    </div>
 
-    <h2>My Account</h2>
+    <div class="account-info">
+      <label for="username">Username</label>
+      <input type="text" id="username" readonly />
+    </div>
+    <div class="account-info">
+      <label for="email">Email</label>
+      <input type="email" id="email" readonly />
+    </div>
+    <div class="account-info">
+      <label for="password">Password</label>
+      <input type="password" id="password" readonly />
+      <div class="pw-row">
+        <label class="pw-toggle">
+          <input type="checkbox" id="show-password" onchange="togglePassword()" />
+          Show password
+        </label>
+      </div>
+    </div>
 
-    <input type="text" id="username" readonly>
-    <input type="email" id="email" readonly>
+    <div class="account-divider"></div>
 
-    <label>
-        <input type="checkbox" onclick="togglePassword()">
-        Show Password
-    </label>
+    <div class="account-info">
+      <label for="joined">Member Since</label>
+      <input type="text" id="joined" readonly />
+    </div>
 
-    <input type="password" id="password" readonly>
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Dashboard
+    </button>
 
+  </div>
 </div>
 
 <script>
-function togglePassword(){
-    let pw=document.getElementById("password");
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (!user) window.location.href = 'login.html';
 
-    pw.type = pw.type==="password"
-        ? "text"
-        : "password";
-}
+  document.getElementById('username').value = user?.username || '';
+  document.getElementById('email').value    = user?.email    || '';
+  document.getElementById('password').value = user?.password || '';
+  document.getElementById('joined').value   = user?.joined   || '';
+
+  const initial = (user?.username || 'U')[0].toUpperCase();
+  document.getElementById('avatar-big').textContent = initial;
+
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    pw.type = pw.type === 'password' ? 'text' : 'password';
+  }
 </script>
-
 </body>
 </html>

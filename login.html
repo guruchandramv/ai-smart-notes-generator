@@ -1,31 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>AI SMART NOTES - LOGIN</title>
-    <link rel="stylesheet" href="styles.css">
-	<script>
-      function validateLogin(){
-          let email=document.getElementById("email").value;
-          let password=document.getElementById("password").value;
-      
-          if(email==="" || password===""){
-              alert("Please fill all fields");
-              return false;
-          }
-      }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LOGIN — AI SMART NOTES</title>
+  <link rel="icon" href="images/notes.png">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-    <h2>Login</h2>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+      </svg>
+      <span>AI SMART NOTES</span>
+    </div>
+    <h2>Welcome back</h2>
+    <p class="auth-subtitle">Sign in to your account to continue</p>
 
-    <input type="email" id="email" placeholder="Email"><br/><br/>
-    <input type="password" id="password" placeholder="Password"><br/><br/>
-    <button onclick="validateLogin()">Login</button>
-    <p>
-        Don't have an account?
-        <a href="signup.html">Sign Up</a>
-    </p>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password" />
+    </div>
+
+    <div class="form-footer">
+      <a href="#">Forgot password?</a>
+      <a href="signup.html">Create an account</a>
+    </div>
+
+    <button class="btn btn-primary" onclick="login()" id="login-btn">Sign In</button>
+  </div>
 </div>
+
+<script>
+  function showToast(msg, type = 'error') {
+    const t = document.createElement('div');
+    t.className = `toast toast-${type}`;
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3200);
+  }
+
+  function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+      showToast('Please fill in all fields.', 'error');
+      return;
+    }
+
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+
+    if (!storedUser) {
+      showToast('No account found. Please sign up first.', 'error');
+      return;
+    }
+
+    if (email === storedUser.email && password === storedUser.password) {
+      localStorage.setItem('loggedIn', 'true');
+      window.location.href = 'dashboard.html';
+    } else {
+      showToast('Incorrect email or password.', 'error');
+    }
+  }
+
+  // Allow Enter key to submit
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') login();
+  });
+</script>
 </body>
 </html>
